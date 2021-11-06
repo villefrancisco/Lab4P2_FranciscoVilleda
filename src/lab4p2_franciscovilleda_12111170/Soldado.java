@@ -64,7 +64,7 @@ public class Soldado {
 
     @Override
     public String toString() {
-        return "Soldado{" + "nombre=" + nombre + ", edad=" + edad + ", rango=" + rango + ", hp=" + hp + ", tiempoejercito=" + tiempoejercito + '}';
+    return nombre + " " + edad + " años, " + rango + " " + hp + " hp, " + tiempoejercito;
     }
     
     public double atacar(Soldado s){

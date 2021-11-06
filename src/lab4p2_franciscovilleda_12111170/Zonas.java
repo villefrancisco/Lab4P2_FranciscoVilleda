@@ -40,8 +40,8 @@ public class Zonas {
     }
 
     public void setX(int x) throws Exception{
-        if(x > 300 || x < 0){
-            throw new Exception("El rango de x es 0 - 300");
+        if(x > 100 || x < 0){
+            throw new Exception("El rango de x es 0 - 100");
         }
         this.x = x;
     }
@@ -51,15 +51,15 @@ public class Zonas {
     }
 
     public void setY(int y) throws Exception{
-        if(y > 300 || y < 0){
-            throw new Exception("El rango de y es 0 - 300");
+        if(y > 100 || y < 0){
+            throw new Exception("El rango de y es 0 - 100");
         }
         this.y = y;
     }
 
     @Override
     public String toString() {
-        return "ZONA " + nombre + "" + size + "(" + x + ", " + y + ')';
+        return "Zona " + nombre + " " + size + " (" + x + ", " + y + ") ";
     }
     
 }

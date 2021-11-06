@@ -22,7 +22,7 @@ public class SuperSoldado extends Soldado {
 
     @Override
     public String toString() {
-        return "SuperSoldado{" + "armas=" + armas + '}';
+        return super.toString() + " " + "Super Soldado ";
     }
     
     public double atacar(Soldado s){

@@ -20,7 +20,7 @@ public class InfLigera extends Soldado{
 
     @Override
     public String toString() {
-        return "InfLigera{" + "arma=" + arma + '}';
+        return super.toString() + " " + "InfLigera ";
     }
     
     public double atacar(Soldado s){

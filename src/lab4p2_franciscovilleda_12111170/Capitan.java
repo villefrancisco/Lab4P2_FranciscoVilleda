@@ -21,7 +21,7 @@ public class Capitan extends Soldado{
 
     @Override
     public String toString() {
-        return "InfLigera{" + "arma=" + arma + '}';
+        return super.toString() + " " + "Capitan ";
     }
     
     public double atacar(Soldado s){
