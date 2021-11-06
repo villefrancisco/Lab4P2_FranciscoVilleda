@@ -132,7 +132,7 @@ public class Lab4P2_FranciscoVilleda_12111170 {
                         }
                     }catch(Exception x){
                         sc.nextLine();
-                        System.out.println("No se pudo agregar el Soldado " + x.getMessage());
+                        System.out.println("El indice se encuentra fuera de rango");
                     }
                 }
                 break;
@@ -145,20 +145,31 @@ public class Lab4P2_FranciscoVilleda_12111170 {
                         e.getSoldados().clear();
                     }catch(Exception x){
                         sc.nextLine();
-                        System.out.println("No se pudo agregar el Soldado " + x.getMessage());
+                        System.out.println("El indice se encuentra fuera de rango");
                     }
                 }
                 break;
                 
                 case 11:{
                     try{
-                        System.out.println("Ingrese el indice del escuadron que va a vaciar");
+                        System.out.println("Ingrese el indice del escuadron atacante");
                         int i = sc.nextInt();
                         Escuadron e = escuadrones.get(i);
-                        e.getSoldados().clear();
+                        System.out.println("Ingrese el indice del escuadron defensor");
+                        int i2 = sc.nextInt();
+                        while(i2 == i){
+                            System.out.println("Tienen que ser dos escuadrones diferentes");
+                            i2 = sc.nextInt();
+                        }
+                        Escuadron e2 = escuadrones.get(i2);
+                        peleas(e, e2);
+                        if(e2.getZonas().size() == 0){
+                            System.out.println(e2 + "Ha sido eliminado (Se quedo sin zonas)");
+                            escuadrones.remove(e2);
+                        }
                     }catch(Exception x){
                         sc.nextLine();
-                        System.out.println("No se pudo agregar el Soldado " + x.getMessage());
+                        System.out.println("El indice se encuentra fuera de rango");
                     }
                 }
                 break;
@@ -295,5 +306,91 @@ public class Lab4P2_FranciscoVilleda_12111170 {
         esc.add(azul);
     }
     
-    
+    public static void peleas(Escuadron a, Escuadron b){
+        if(a.getSoldados().size() >= 3 && b.getSoldados().size() >= 3){
+            Zonas z = b.getZonas().get(0);
+            boolean ingresado = false;
+            boolean pelear = true;
+            Soldado sol1 = null, sol2 = null;
+            while(!ingresado){
+                try{
+                    System.out.println("Ingrese el indice del soldado atacante");
+                    int s1 = sc.nextInt();
+                    sol1 = a.getSoldados().get(s1);
+                    System.out.println("Ingrese el indice del soldado defensor");
+                    int s2 = sc.nextInt();
+                    sol2 = b.getSoldados().get(s2);
+                    ingresado = true;
+                }catch(Exception x){
+                    System.out.println("Datos Erroneos");
+                }
+            }
+            while(pelear){
+                double vida1 = sol1.getHp(), vida2 = sol2.getHp();
+                int turno = 1;
+                while(vida1 > 0 && vida2 > 0){
+                    if(turno == 1){
+                        vida2 -= sol1.atacar(sol2);
+                        System.out.println(sol1.getNombre() + " ataco a " + sol2.getNombre());
+                        System.out.println("vida de " + sol1.getNombre() + ": " + vida1);
+                        System.out.println("vida de " + sol2.getNombre() + ": " + vida2);
+                        turno = 2;
+                    }
+                    else if(turno == 2){
+                        vida1 -= sol2.atacar(sol2);
+                        System.out.println(sol1.getNombre() + " ataco a " + sol2.getNombre());
+                        System.out.println("vida de " + sol1.getNombre() + ": " + vida1);
+                        System.out.println("vida de " + sol2.getNombre() + ": " + vida2);
+                        turno = 1;
+                    }
+                }
+                if(vida1 == 0){
+                        a.getSoldados().remove(sol1);
+                        System.out.println("Dese seguir luchando:\n 0 - NO \n 1 - SI");
+                        int opcion = sc.nextInt();
+                        if(opcion == 0){
+                            pelear = false;
+                        }
+                        else{
+                            boolean ingresado2 = false; 
+                            while(!ingresado2){
+                                try{
+                                    System.out.println("Ingrese el indice del soldado atacante");
+                                    int s1 = sc.nextInt();
+                                    sol1 = a.getSoldados().get(s1);
+                                    ingresado2 = true;
+                                }catch(Exception x){
+                                    System.out.println("Datos Erroneos");
+                                }
+                            }
+                        }
+                    }
+                    else{
+                        b.getSoldados().remove(sol2);
+                        System.out.println("Dese seguir luchando:\n 0 - NO \n 1 - SI");
+                        int opcion = sc.nextInt();
+                        if(opcion == 0){
+                            pelear = false;
+                            a.getZonas().add(z);
+                            b.getZonas().remove(z);
+                        }
+                        else{
+                            boolean ingresado2 = false; 
+                            while(!ingresado2){
+                                try{
+                                    System.out.println("Ingrese el indice del soldado defensor");
+                                    int s1 = sc.nextInt();
+                                    sol1 = a.getSoldados().get(s1);
+                                    ingresado2 = true;
+                                }catch(Exception x){
+                                    System.out.println("Datos Erroneos");
+                                }
+                            }
+                        }
+                    }
+            }
+        }else{
+            System.out.println("No hay soldados suficientes para pelear");
+        }
+    }
 }
